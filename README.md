@@ -102,6 +102,8 @@ The API will be available at `http://localhost:8000` with an interactive Swagger
 
 ### Example Requests
 
+I would recomend playing around with the `/docs` page, but here are some quick curl commands to get started!
+
 #### Register
 
 ```bash
@@ -129,14 +131,18 @@ curl -X POST http://localhost:8000/auth/login \
 
 #### Full Flow
 
+Login and store cookies:
+
 ```bash
-# Login and store cookies
 curl -X POST http://localhost:8000/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email": "user@example.com", "password": "test123"}' \
   -c cookies.txt
+```
 
-# Call /auth/me sending stored cookie
+Call `/auth/me` sending stored cookie::
+
+```bash
 curl http://localhost:8000/auth/me \
   -b cookies.txt
 ```
@@ -171,9 +177,9 @@ Tests automatically:
 
 ### Tech Stack
 
-- **FastAPI** — API framework
-- **SQLAlchemy** — ORM
-- **Alembic** — database migrations
-- **PostgreSQL** — persistent database
-- **Docker Compose** — running infrastructure services
-- **Argon2** — password hashing
+- **FastAPI** - API framework
+- **SQLAlchemy** - ORM
+- **Alembic** - database migrations
+- **PostgreSQL** - persistent database
+- **Docker Compose** - running infrastructure services
+- **Argon2** - password hashing
