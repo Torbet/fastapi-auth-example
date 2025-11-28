@@ -77,8 +77,12 @@ async def get_current_user(
     """
     try:
         payload = jwt.decode(token, settings.jwt_secret, algorithms=["HS256"])
-        user_id: str = payload.get("sub")
-        if user_id is None:
+        sub: str = payload.get("sub")
+        if sub is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        try:
+            user_id = UUID(sub)
+        except ValueError:
             raise HTTPException(status_code=401, detail="Invalid token")
     except ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Expired token")

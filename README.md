@@ -139,6 +139,32 @@ curl http://localhost:8000/auth/me \
   -b cookies.txt
 ```
 
+### Testing
+
+This project includes a full test suite using pytest, FastAPI’s TestClient, and an in-memory SQLite test database.
+
+Install test dependencies:
+
+```bash
+uv sync --group dev
+```
+
+Run the tests:
+
+```bash
+uv run pytest
+```
+
+Tests automatically:
+
+- Spin up an isolated in-memory SQLite database (no external DB required)
+- Override the app’s database dependency
+- Exercise all authentication endpoints:
+  - `/auth/register`
+  - `/auth/login`
+  - `/auth/me`
+  - `/auth/logout`
+
 ### Tech Stack
 
 - **FastAPI** — API framework
