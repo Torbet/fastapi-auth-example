@@ -8,6 +8,8 @@ from app.core.config import settings
 
 
 class Base(DeclarativeBase):
+    """Base class for all ORM models."""
+
     pass
 
 
@@ -21,4 +23,9 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 def load_models():
+    """Import all model modules so SQLAlchemy's metadata is populated.
+
+    This is used both by the FastAPI app (via lifespan) and by Alembic
+    migrations to discover the `User` model.
+    """
     import_module("app.models.user")

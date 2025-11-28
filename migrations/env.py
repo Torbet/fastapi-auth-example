@@ -15,6 +15,7 @@ config.set_main_option("sqlalchemy.url", settings.database_url)
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+# Ensure all models are imported so that Alembic can see them
 load_models()
 target_metadata = Base.metadata
 

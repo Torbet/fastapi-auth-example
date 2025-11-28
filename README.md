@@ -47,7 +47,7 @@ fastapi-auth-example
 
 Passwords are securely hashed before storage.
 
-On successful login a token HTTP-only cookie is set with the JWT encoded credentials.
+On successful login, an HTTP-only `token` cookie is set with the JWT-encoded credentials.
 
 #### Additional Features
 

@@ -17,6 +17,12 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/login", response_model=LoginResponse, status_code=status.HTTP_200_OK)
 async def login(body: LoginRequest, response: Response, session: Session):
+    """Authenticate a user by email and password.
+
+    On success:
+      - Sets an HTTP-only `token` cookie with a JWT
+      - Returns basic user information (id, name, email)
+    """
     user = await session.scalar(select(User).where(User.email == body.email))
     if not user or not verify_password(body.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -29,6 +35,13 @@ async def login(body: LoginRequest, response: Response, session: Session):
     "/register", response_model=RegisterResponse, status_code=status.HTTP_201_CREATED
 )
 async def register(body: RegisterRequest, response: Response, session: Session):
+    """Create a new user account.
+
+    - Rejects if the email is already registered
+    - Hashes the password before saving
+    - Sets an HTTP-only `token` cookie on success
+    - Returns the new user's ID
+    """
     existing = await session.scalar(select(User).where(User.email == body.email))
     if existing:
         raise HTTPException(status_code=400, detail="User already exists")
@@ -46,9 +59,11 @@ async def register(body: RegisterRequest, response: Response, session: Session):
 
 @router.get("/logout", status_code=status.HTTP_204_NO_CONTENT)
 async def logout(response: Response):
+    """Log out the current user by clearing the authentication cookie."""
     response.delete_cookie(key="token", httponly=True, samesite="lax")
 
 
 @router.get("/me", response_model=UserRead, status_code=status.HTTP_200_OK)
 async def me(current_user: CurrentUser):
+    """Get the currently authenticated user's information."""
     return current_user
