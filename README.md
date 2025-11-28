@@ -1,5 +1,7 @@
 ## FastAPI Authentication Example
 
+![CI](https://github.com/torbet/fastapi-auth-example/actions/workflows/tests.yml/badge.svg)
+
 A simple authentication API built with FastAPI, SQLAlchemy, and PostgreSQL, providing endpoints for user registration and login.
 
 > Note: The original assignment requested Flask; this implementation uses FastAPI instead, while still fulfilling the same API contract and database requirements.
@@ -142,6 +144,8 @@ curl http://localhost:8000/auth/me \
 ### Testing
 
 This project includes a full test suite using pytest, FastAPI’s TestClient, and an in-memory SQLite test database.
+
+It also included a github action workflow to automatically run these tests on push to main branch.
 
 Install test dependencies:
 
