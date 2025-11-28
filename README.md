@@ -8,7 +8,7 @@ A simple authentication API built with FastAPI, SQLAlchemy, and PostgreSQL, prov
 
 ```
 fastapi-auth-example
-├── migrations               # Alembic database migrations
+├── migrations                      # Alembic database migrations
 │   ├── env.py
 │   ├── script.py.mako
 │   └── versions
@@ -16,24 +16,24 @@ fastapi-auth-example
 ├── src
 │   └── app
 │       ├── __init__.py
-│       ├── core            # Application configuration & utilities
-│       │   ├── app.py      # FastAPI app instance + router loading
-│       │   ├── config.py   # Environment variables & settings
-│       │   ├── database.py # Async SQLAlchemy engine & session setup
-│       │   ├── dependencies.py # Common FastAPI dependencies
-│       │   └── security.py # Auth helpers: hashing, JWT, OAuth cookie
-│       ├── models          # SQLAlchemy ORM models
+│       ├── core                    # Application configuration & utilities
+│       │   ├── app.py              # FastAPI app instance + router loading
+│       │   ├── config.py           # Environment variables & settings
+│       │   ├── database.py         # Async SQLAlchemy engine & session setup
+│       │   ├── dependencies.py     # Common FastAPI dependencies
+│       │   └── security.py         # Auth helpers: hashing, JWT, OAuth cookie
+│       ├── models                  # SQLAlchemy ORM models
 │       │   └── user.py
-│       ├── routers         # API route handlers
-│       │   └── auth.py     # /auth routes (register, login, me, logout)
-│       └── schemas         # Pydantic schemas for validation & responses
+│       ├── routers                 # API route handlers
+│       │   └── auth.py             # /auth routes (register, login, me, logout)
+│       └── schemas                 # Pydantic schemas for validation & responses
 │           ├── auth.py
 │           └── user.py
-├── alembic.ini             # Alembic configuration
-├── compose.yml             # Local Postgres setup via Docker
-├── pyproject.toml          # Application dependencies & entrypoint
-├── README.md               # Documentation
-└── uv.lock                 # UV dependency lock file
+├── alembic.ini                     # Alembic configuration
+├── compose.yml                     # Local Postgres setup via Docker
+├── pyproject.toml                  # Application dependencies & entrypoint
+├── README.md                       # Documentation
+└── uv.lock                         # UV dependency lock file
 ```
 
 ### Features
