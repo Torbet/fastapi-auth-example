@@ -1,35 +1,39 @@
 ## FastAPI Authentication Example
 
+A simple authentication API built with FastAPI, SQLAlchemy, and PostgreSQL, providing endpoints for user registration and login.
+
+> Note: The original assignment requested Flask; this implementation uses FastAPI instead, while still fulfilling the same API contract and database requirements.
+
 ### Project Structure
 
 ```
 fastapi-auth-example
-├── migrations
-│   ├── env.py
-│   ├── script.py.mako
-│   └── versions
-│       └── 7dfc9f79011c_initial_migration.py
+├── migrations               # Alembic database migrations
+│   ├── env.py
+│   ├── script.py.mako
+│   └── versions
+│       └── 7dfc9f79011c_initial_migration.py
 ├── src
-│   └── app
-│       ├── __init__.py
-│       ├── core
-│       │   ├── app.py
-│       │   ├── config.py
-│       │   ├── database.py
-│       │   ├── dependencies.py
-│       │   └── security.py
-│       ├── models
-│       │   └── user.py
-│       ├── routers
-│       │   └── auth.py
-│       └── schemas
-│           ├── auth.py
-│           └── user.py
-├── alembic.ini
-├── compose.yml
-├── pyproject.toml
-├── README.md
-└── uv.lock
+│   └── app
+│       ├── __init__.py
+│       ├── core            # Application configuration & utilities
+│       │   ├── app.py      # FastAPI app instance + router loading
+│       │   ├── config.py   # Environment variables & settings
+│       │   ├── database.py # Async SQLAlchemy engine & session setup
+│       │   ├── dependencies.py # Common FastAPI dependencies
+│       │   └── security.py # Auth helpers: hashing, JWT, OAuth cookie
+│       ├── models          # SQLAlchemy ORM models
+│       │   └── user.py
+│       ├── routers         # API route handlers
+│       │   └── auth.py     # /auth routes (register, login, me, logout)
+│       └── schemas         # Pydantic schemas for validation & responses
+│           ├── auth.py
+│           └── user.py
+├── alembic.ini             # Alembic configuration
+├── compose.yml             # Local Postgres setup via Docker
+├── pyproject.toml          # Application dependencies & entrypoint
+├── README.md               # Documentation
+└── uv.lock                 # UV dependency lock file
 ```
 
 ### Features
@@ -42,6 +46,8 @@ fastapi-auth-example
 | `/auth/login`    | POST   | Authenticate an existing user |
 
 Passwords are securely hashed before storage.
+
+On successful login a token HTTP-only cookie is set with the JWT encoded credentials.
 
 #### Additional Features
 
@@ -91,6 +97,33 @@ uv run start
 ```
 
 The API will be available at `http://localhost:8000` with an interactive Swagger UI at `http://localhost:8000/docs`
+
+### Example Requests
+
+#### Register
+
+```bash
+curl -X POST http://localhost:8000/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "My name",
+    "email": "user@example.com",
+    "password": "test123"
+  }'
+
+```
+
+#### Login
+
+```bash
+curl -X POST http://localhost:8000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "test123"
+  }' \
+  -i
+```
 
 ### Tech Stack
 

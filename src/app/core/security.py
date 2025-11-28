@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from uuid import UUID
 
@@ -41,7 +41,7 @@ def verify_password(password: str, hashed: str) -> bool:
 
 
 def create_access_token(user_id: UUID) -> str:
-    expire = datetime.now() + timedelta(minutes=30)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=30)
     data = {"sub": str(user_id), "exp": expire}
     return jwt.encode(data, settings.jwt_secret, algorithm="HS256")
 
