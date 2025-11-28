@@ -125,6 +125,20 @@ curl -X POST http://localhost:8000/auth/login \
   -i
 ```
 
+#### Full Flow
+
+```bash
+# Login and store cookies
+curl -X POST http://localhost:8000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "test123"}' \
+  -c cookies.txt
+
+# Call /auth/me sending stored cookie
+curl http://localhost:8000/auth/me \
+  -b cookies.txt
+```
+
 ### Tech Stack
 
 - **FastAPI** — API framework
