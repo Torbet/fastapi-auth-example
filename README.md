@@ -32,10 +32,11 @@ fastapi-auth-example
 │           ├── auth.py
 │           └── user.py
 ├── alembic.ini                     # Alembic configuration
-├── compose.yml                     # Local Postgres setup via Docker
-├── pyproject.toml                  # Application dependencies & entrypoint
+├── compose.yml                     # Local Postgres + app + migrations via Docker
+├── Dockerfile                      # Application container build with uv
+├── pyproject.toml                  # Dependencies & entrypoint
 ├── README.md                       # Documentation
-└── uv.lock                         # UV dependency lock file
+└── uv.lock                         # Locked dependencies
 ```
 
 ### Features
@@ -65,7 +66,35 @@ On successful login, an HTTP-only `token` cookie is set with the JWT-encoded cre
 - Docker installed and running
 - UV (Python package manager)
 
-#### Setup Instructions
+#### Run with Docker
+
+1. Create environment config:
+
+```bash
+cp .env.example .env
+```
+
+2. Build & start the app:
+
+```bash
+docker compose up --build
+```
+
+This will automatically:
+
+- Start PostgreSQL
+- Apply Alembic migrations
+- Launch the FastAPI backend
+
+To stop everything:
+
+```bash
+docker compose down -v
+```
+
+> `-v` clears the database volume for a fresh start
+
+#### Manual Setup Instructions
 
 1. Sync dependencies and activate virtual environment:
 
