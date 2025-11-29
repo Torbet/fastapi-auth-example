@@ -31,6 +31,10 @@ fastapi-auth-example
 │       └── schemas                 # Pydantic schemas for validation & responses
 │           ├── auth.py
 │           └── user.py
+├── tests                           # Automated test suite (pytest)
+│   ├── __init__.py
+│   ├── conftest.py                 # Test DB override + client fixture
+│   └── test_auth.py                # Authentication endpoint tests
 ├── alembic.ini                     # Alembic configuration
 ├── compose.yml                     # Local Postgres + app + migrations via Docker
 ├── Dockerfile                      # Application container build with uv

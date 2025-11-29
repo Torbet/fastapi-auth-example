@@ -1,4 +1,3 @@
-import asyncio
 from typing import AsyncGenerator
 
 import pytest
@@ -10,27 +9,17 @@ from app.core.database import Base, get_session
 
 
 @pytest.fixture(scope="session")
-def event_loop():
-    """Create an event loop for the test session."""
-    loop = asyncio.new_event_loop()
-    yield loop
-    loop.close()
-
-
-@pytest.fixture(scope="session")
-def engine(event_loop):
+async def engine():
     """Create a shared in-memory SQLite engine and initialize the schema once."""
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
 
-    async def init_models():
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.drop_all)
-            await conn.run_sync(Base.metadata.create_all)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
 
-    event_loop.run_until_complete(init_models())
     yield engine
-    event_loop.run_until_complete(engine.dispose())
+    await engine.dispose()
 
 
 @pytest.fixture(scope="session")
